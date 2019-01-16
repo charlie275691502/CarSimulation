@@ -7,8 +7,8 @@ public class CarAttributes{
     public int prefab_number;
     public GameObject gmo;
     private float _x, _y, _rotation;
-    public float x { get { return _x; } set { _x = value; gmo.transform.position = new Vector3(value, 1.39f, gmo.transform.position.z); } }
-    public float y { get { return _y; } set { _y = value; gmo.transform.position = new Vector3(gmo.transform.position.x, 1.39f, value); } }
+    public float x { get { return _x; } set { _x = value; gmo.transform.position = new Vector3(value, gmo.transform.position.y, gmo.transform.position.z); } }
+    public float y { get { return _y; } set { _y = value; gmo.transform.position = new Vector3(gmo.transform.position.x, gmo.transform.position.y, value); } }
     public float rotation { get { return _rotation; } set { _rotation = value; gmo.transform.localRotation = Quaternion.Euler(new Vector3(0, 90 - value, 0)); } }
     public List<Status> status;
 
@@ -70,6 +70,8 @@ public class CarsController : MonoBehaviour {
     IEnumerator CarSimulator(int index){
         carsAttributes[index].gmo = Instantiate(car_prefabs[carsAttributes[index].prefab_number], car_folder);
         carsAttributes[index].gmo.transform.localScale = new Vector3(2, 2, 2);
+        float floating = GetFloatingByCarType(carsAttributes[index].prefab_number);
+        carsAttributes[index].gmo.transform.localPosition = new Vector3(0, floating, 0);
         carsAttributes[index].x = carsAttributes[index].status[0].x;
         carsAttributes[index].y = carsAttributes[index].status[0].y;
         carsAttributes[index].rotation = carsAttributes[index].status[0].rotation;
@@ -86,5 +88,20 @@ public class CarsController : MonoBehaviour {
             }
         }
         yield return null;
+    }
+
+    float GetFloatingByCarType(int index){
+        switch(index){
+            case 0: return 1.39f;
+            case 1: return 1.39f;
+            case 2: return 0.81f;
+            case 3: return 0.81f;
+            case 4: return 0.81f;
+            case 5: return 0.81f;
+            case 6: return 0.81f;
+            case 7: return 0.81f;
+            default: break;
+        }
+        return 0;
     }
 }
