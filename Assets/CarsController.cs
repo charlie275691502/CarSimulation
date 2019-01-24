@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarAttributes{
     public int index;
@@ -47,14 +48,28 @@ public class CarsController : MonoBehaviour {
     public Transform car_folder;
     public CarAttributes[] carsAttributes;
 
+    public bool isPause;
+    public Text pauseText;
+
 	// Use this for initialization
 	void Start () {
+        isPause = true;
         InitCars();
 	}
 
+    public void ClickPauseButton(){
+        if(isPause){
+            isPause = false;
+            pauseText.text = "||";
+        } else {
+            isPause = true;
+            pauseText.text = "►";
+        }
+    }
+
     float time = 0.0f;
     private void Update(){
-        time += Time.deltaTime;
+        if(!isPause) time += Time.deltaTime;
 	}
 
     void InitCars(){
