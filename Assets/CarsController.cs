@@ -7,13 +7,13 @@ public class CarAttributes{
     public int index;
     public int prefab_number;
     public GameObject gmo;
-    public GameObject status_gmo;
+    public GameObject informationPanel_gmo;
     private float _x, _y, _rotation;
     private int _speed;
     public float x { get { return _x; } set { _x = value; gmo.transform.position = new Vector3(value, gmo.transform.position.y, gmo.transform.position.z); } }
     public float y { get { return _y; } set { _y = value; gmo.transform.position = new Vector3(gmo.transform.position.x, gmo.transform.position.y, value); } }
     public float rotation { get { return _rotation; } set { _rotation = value; gmo.transform.localRotation = Quaternion.Euler(new Vector3(0, 90 - value, 0)); } }
-    public int speed{ get { return _speed; } set { _speed = value; status_gmo.transform.Find("Constants").Find("Speed").Find("value").GetComponent<Text>().text = value.ToString();}}
+    public int speed{ get { return _speed; } set { _speed = value; informationPanel_gmo.transform.Find("Constants").Find("Speed").Find("value").GetComponent<Text>().text = value.ToString();}}
     public List<Status> status;
 
     public CarAttributes(string tempString){
@@ -78,14 +78,14 @@ public class CarsController : MonoBehaviour {
     }
 
     public void ChangeDropDown(int x){
-        for (int i = 1; i < carsAttributes.Length; i++) carsAttributes[i].status_gmo.SetActive(false);
+        for (int i = 1; i < carsAttributes.Length; i++) carsAttributes[i].informationPanel_gmo.SetActive(false);
         int value = cameraSelectingDropDown.value;
         if(value == 0){
             mainCamera.transform.parent = null;
             mainCamera.transform.localPosition = new Vector3(0, 28.2f, -45.6f);
             mainCamera.transform.localRotation = Quaternion.Euler(45, 0, 0);
         } else {
-            carsAttributes[value].status_gmo.SetActive(true);
+            carsAttributes[value].informationPanel_gmo.SetActive(true);
             mainCamera.transform.parent = carsAttributes[value].gmo.transform;
             mainCamera.transform.localPosition = new Vector3(0, 5, -5);
             mainCamera.transform.localRotation = Quaternion.Euler(45, 0, 0);
@@ -135,7 +135,7 @@ public class CarsController : MonoBehaviour {
         carsAttributes[index].gmo.transform.localScale = new Vector3(2, 2, 2);
         float floating = GetFloatingByCarType(carsAttributes[index].prefab_number);
         carsAttributes[index].gmo.transform.localPosition = new Vector3(0, floating, 0);
-        carsAttributes[index].status_gmo = carsAttributes[index].gmo.transform.Find("CarStatus").gameObject;
+        carsAttributes[index].informationPanel_gmo = carsAttributes[index].gmo.transform.Find("InformationPanel").gameObject;
         //Instantiate(carStatusPrefab, carsAttributes[index].gmo.transform).transform.localPosition = new Vector3(-0.2f, 2.52f, 1.3f);
         carsAttributes[index].x = carsAttributes[index].status[0].x;
         carsAttributes[index].y = carsAttributes[index].status[0].y;
