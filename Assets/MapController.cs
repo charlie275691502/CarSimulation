@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class MapController : MonoBehaviour {
     public List<Vector2Int> streets;
@@ -8,7 +9,6 @@ public class MapController : MonoBehaviour {
     public GameObject turn;
     public GameObject TCross;
     public GameObject XCross;
-    public TextAsset map_textAsset;
     public Transform map_folder;
 
 	// Use this for initialization
@@ -17,7 +17,10 @@ public class MapController : MonoBehaviour {
 	}
 	
     void InitStreets(){
-        string[] tempString = map_textAsset.text.Split('\n');
+        StreamReader sr = new StreamReader(Path.Combine(PlayerPrefs.GetString("FolderPath"), "MapInput.txt"));
+        string mapInput = sr.ReadToEnd();
+        sr.Close();
+        string[] tempString = mapInput.Split('\n');
         streets = new List<Vector2Int>();
 
         foreach(string s in tempString){

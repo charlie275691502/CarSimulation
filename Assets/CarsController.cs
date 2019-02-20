@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class CarAttributes{
     public int index;
@@ -46,7 +47,6 @@ public class Status{
 }
 
 public class CarsController : MonoBehaviour {
-    public TextAsset cars_textAsset;
     public GameObject[] car_prefabs;
     public Transform car_folder;
     public CarAttributes[] carsAttributes;
@@ -110,7 +110,10 @@ public class CarsController : MonoBehaviour {
 	}
 
     void InitCars(){
-        string[] tempString = cars_textAsset.text.Split('#');
+        StreamReader sr = new StreamReader(Path.Combine(PlayerPrefs.GetString("FolderPath"), "CarInput.txt"));
+        string carInput = sr.ReadToEnd();
+        sr.Close();
+        string[] tempString = carInput.Split('#');
         carsAttributes = new CarAttributes[tempString.Length];
 
         for (int i = 1; i < tempString.Length; i++){
