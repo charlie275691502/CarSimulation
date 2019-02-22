@@ -59,10 +59,10 @@ namespace Crosstales.FB.Demo{
                     int south = (int.Parse(intersectionDefineUI.southIntersectionLength_input.text) - 1) / 25 + 1;
                     int west = (int.Parse(intersectionDefineUI.westIntersectionLength_input.text) - 1) / 25 + 1;
                     int north = (int.Parse(intersectionDefineUI.northIntersectionLength_input.text) - 1) / 25 + 1;
-                    for (int i = 0; i < north; i++) ret += "\n0 " + i.ToString();
-                    for (int i = 0; i < east; i++) ret += "\n" + i.ToString() + " 0";
-                    for (int i = 0; i < south; i++) ret += "\n0 -" + i.ToString();
-                    for (int i = 0; i < west; i++) ret += "\n-" + i.ToString() + " 0";
+                    for (int i = 1; i <= north; i++) ret += "\n0 " + i.ToString();
+                    for (int i = 1; i <= east; i++) ret += "\n" + i.ToString() + " 0";
+                    for (int i = 1; i <= south; i++) ret += "\n0 -" + i.ToString();
+                    for (int i = 1; i <= west; i++) ret += "\n-" + i.ToString() + " 0";
                     break;
                     
             }
